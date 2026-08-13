@@ -1,0 +1,7 @@
+Etape 3 - Corrections JavaScript
+
+Corrections appliquees:
+- Correction de l import Supabase dans upload.js (ancien fichier supabaseClient.js absent).
+- Ajout validation PDF et limite 10 Mo avant upload.
+- Amelioration commentaire securite config.js.
+- Audit des scripts auth/admin: protections XSS deja presentes conservees.

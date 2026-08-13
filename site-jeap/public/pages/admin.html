@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="Gilbert DAGBEMON">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration - JEAP</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pemdigpakfpomjpaynlv.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../dist/output.css">
+    <meta name="theme-color" content="#2563eb">
+</head>
+<body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../assets/images/logo.png" alt="Logo JEAP" width="40" height="40">
+        <span class="font-semibold text-lg">JEAP — Espace Admin</span>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="documents.html" class="btn-secondary text-sm">Retour au site</a>
+        <button class="btn-logout text-sm hover:text-jeap-accent-dark">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8 space-y-8">
+
+    <!-- Message affiché si l'utilisateur n'est pas admin (masqué par défaut) -->
+    <div id="admin-guard-message" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm p-4 rounded-lg"></div>
+
+    <div id="admin-content" class="space-y-8 hidden">
+
+    <div>
+      <h1 class="text-2xl font-bold">Panneau d'administration</h1>
+    </div>
+
+    <!-- Section 0 : Tableau de bord (graphiques) -->
+    <section class="grid md:grid-cols-2 gap-4">
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h2 class="text-sm font-bold mb-4">Documents les plus téléchargés</h2>
+        <div class="relative h-64">
+          <canvas id="chart-top-downloads"></canvas>
+          <p id="chart-top-downloads-empty" class="hidden text-xs text-gray-500 text-center absolute inset-0 flex items-center justify-center">Pas encore de téléchargements.</p>
+        </div>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h2 class="text-sm font-bold mb-4">Inscriptions par mois</h2>
+        <div class="relative h-64">
+          <canvas id="chart-signups"></canvas>
+          <p id="chart-signups-empty" class="hidden text-xs text-gray-500 text-center absolute inset-0 flex items-center justify-center">Pas encore d'inscriptions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1 : Validation des comptes utilisateurs -->
+    <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg font-bold mb-4">Comptes utilisateurs en attente</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-gray-50 uppercase text-gray-500 border-b">
+            <tr>
+              <th class="p-3">Nom & Prénom</th>
+              <th class="p-3">Email</th>
+              <th class="p-3">Statut</th>
+              <th class="p-3">Rôle</th>
+              <th class="p-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-table" class="divide-y divide-gray-100">
+            <tr>
+              <td colspan="5" class="p-4 text-center text-gray-500">Chargement des utilisateurs...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2 : Modération des documents -->
+    <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg font-bold mb-4">Gestion des documents en ligne</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-gray-50 uppercase text-gray-500 border-b">
+            <tr>
+              <th class="p-3">Titre</th>
+              <th class="p-3">Faculté / Niveau</th>
+              <th class="p-3">Date</th>
+              <th class="p-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="docs-table" class="divide-y divide-gray-100">
+            <tr>
+              <td colspan="4" class="p-4 text-center text-gray-500">Chargement des documents...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3 : Actualités JEAP -->
+    <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg font-bold mb-1" id="news-form-title">Publier une actualité</h2>
+
+      <div id="news-form-alert" class="hidden mb-4 p-3 text-xs rounded-md"></div>
+
+      <form id="news-form" class="space-y-3 mb-8">
+        <input type="hidden" id="news-id" value="">
+
+        <div>
+          <label for="news-title" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Titre</label>
+          <input id="news-title" type="text" required
+                 class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+        </div>
+
+        <div>
+          <label for="news-content" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Contenu</label>
+          <textarea id="news-content" rows="4" required
+                    class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent"></textarea>
+        </div>
+
+        <div>
+          <label for="news-image" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Image de couverture (facultatif)</label>
+          <input id="news-image" type="file" accept="image/*"
+                 class="w-full text-xs text-gray-600">
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button id="news-submit-btn" type="submit" class="btn-cta text-sm">Publier</button>
+          <button id="news-cancel-edit" type="button" class="btn-secondary text-sm hidden">Annuler la modification</button>
+        </div>
+      </form>
+
+      <h3 class="text-sm font-bold mb-3">Actualités publiées</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-gray-50 uppercase text-gray-500 border-b">
+            <tr>
+              <th class="p-3">Titre</th>
+              <th class="p-3">Date de publication</th>
+              <th class="p-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="news-table" class="divide-y divide-gray-100">
+            <tr>
+              <td colspan="3" class="p-4 text-center text-gray-500">Chargement des actualités...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4 : Bureau exécutif -->
+    <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-lg font-bold mb-1" id="bureau-form-title">Ajouter un membre du bureau</h2>
+
+
+      <div id="bureau-form-alert" class="hidden mb-4 p-3 text-xs rounded-md"></div>
+
+      <form id="bureau-form" class="space-y-3 mb-8">
+        <input type="hidden" id="bureau-id" value="">
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label for="bureau-full-name" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Nom complet</label>
+            <input id="bureau-full-name" type="text" required placeholder="Ex : AKPO Mawutondji Alban"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+          <div>
+            <label for="bureau-role" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Poste</label>
+            <input id="bureau-role" type="text" required placeholder="Ex : Président(e)"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label for="bureau-email" class="block text-xs font-semibold uppercase text-gray-600 mb-1">E-mail (facultatif)</label>
+            <input id="bureau-email" type="email" placeholder="nom@exemple.com"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+          <div>
+            <label for="bureau-whatsapp" class="block text-xs font-semibold uppercase text-gray-600 mb-1">WhatsApp (facultatif)</label>
+            <input id="bureau-whatsapp" type="text" placeholder="Ex : 22901661090 (indicatif + numéro, sans le +)"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label for="bureau-facebook-url" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Lien Facebook / Messenger (facultatif)</label>
+            <input id="bureau-facebook-url" type="url" placeholder="https://facebook.com/..."
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+          <div>
+            <label for="bureau-facebook-label" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Libellé du lien (facultatif)</label>
+            <input id="bureau-facebook-label" type="text" placeholder="Ex : Profil Facebook"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label for="bureau-year" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Année académique</label>
+            <input id="bureau-year" type="text" required placeholder="Ex : 2026-2027"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+          <div>
+            <label for="bureau-sort-order" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Ordre d'affichage</label>
+            <input id="bureau-sort-order" type="number" value="0" placeholder="0 = affiché en premier"
+                   class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          </div>
+        </div>
+
+        <div>
+          <label for="bureau-photo" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Photo (carrée recommandée, facultatif)</label>
+          <input id="bureau-photo" type="file" accept="image/*"
+                 class="w-full text-xs text-gray-600">
+        </div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button id="bureau-submit-btn" type="submit" class="btn-cta text-sm">Ajouter</button>
+          <button id="bureau-cancel-edit" type="button" class="btn-secondary text-sm hidden">Annuler la modification</button>
+        </div>
+      </form>
+
+      <h3 class="text-sm font-bold mb-3">Membres actuels du bureau</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-gray-50 uppercase text-gray-500 border-b">
+            <tr>
+              <th class="p-3">Photo</th>
+              <th class="p-3">Nom</th>
+              <th class="p-3">Poste</th>
+              <th class="p-3">Année</th>
+              <th class="p-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bureau-table" class="divide-y divide-gray-100">
+            <tr>
+              <td colspan="5" class="p-4 text-center text-gray-500">Chargement du bureau...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    </div>
+    <!-- /admin-content -->
+
+  </main>
+
+  <script type="module" src="../js/admin.js"></script>
+  <script type="module" src="../js/nav.js"></script>
+  <!-- Chart.js pour les graphiques du tableau de bord admin (documents les plus téléchargés, inscriptions par mois) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script type="module" src="../js/admin-charts.js"></script>
+</body>
+</html>

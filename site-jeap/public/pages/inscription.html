@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Gilbert DAGBEMON">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription - JEAP</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pemdigpakfpomjpaynlv.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../dist/output.css">
+    <meta name="theme-color" content="#2563eb">
+</head>
+<body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../assets/images/logo.png" alt="Logo JEAP" width="40" height="40">
+        <span class="font-semibold text-lg">JEAP</span>
+      </a>
+      <a href="connexion.html" class="nav-guest btn-secondary text-sm">Connexion</a>
+      <div class="nav-user hidden flex items-center gap-3">
+        <a href="../index.html" class="text-sm hover:text-jeap-accent-dark">Vous êtes déjà connecté</a>
+        <button class="btn-logout btn-secondary text-sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Formulaire d'inscription -->
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border border-gray-100">
+      <h1 class="text-2xl font-bold mb-2 text-center">Créer un compte</h1>
+      <p class="text-xs text-gray-500 mb-6 text-center">
+        Rejoignez la communauté JEAP.
+      </p>
+
+      <!-- ID aligne sur celui utilise par auth.js (alert-box) -->
+      <div id="alert-box" class="hidden mb-4 p-3 text-xs rounded-md"></div>
+
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <!-- ID ajusté en last-name -->
+          <label for="last-name" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Nom</label>
+          <input type="text" id="last-name" required pattern="[a-zA-ZÀ-ÿ\s\-]+" title="Lettres uniquement (aucun chiffre)"
+            class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="ex. DAGBEMON">
+        </div>
+
+        <div>
+          <!-- ID ajusté en first-name -->
+          <label for="first-name" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Prénom</label>
+          <input type="text" id="first-name" required pattern="[a-zA-ZÀ-ÿ\s\-]+" title="Lettres uniquement (aucun chiffre)"
+            class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="ex. Gilbert">
+        </div>
+
+        <div>
+          <label for="email" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Adresse e-mail</label>
+          <input type="email" id="email" required
+            class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="votre.email@exemple.com">
+        </div>
+
+        <div>
+          <label for="password" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Mot de passe</label>
+          <div class="relative">
+            <input type="password" id="password" minlength="8" required
+              class="w-full border border-gray-200 rounded px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="8+ chars (lettres et chiffres)">
+            <button type="button" class="toggle-password absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-jeap-accent-dark" data-target="password" aria-label="Afficher le mot de passe">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-submit" class="btn-cta w-full mt-2 py-2.5">S'inscrire</button>
+      </form>
+
+      <p class="text-xs text-center text-gray-500 mt-6">
+        Déjà un compte ? <a href="connexion.html" class="text-jeap-accent-dark hover:underline font-semibold">Se connecter</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-jeap-green text-white/90 text-sm">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid sm:grid-cols-3 gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="../assets/images/logo.png" alt="Logo JEAP" width="28" height="28" loading="lazy">
+          <span class="font-semibold text-white">JEAP</span>
+        </div>
+        <p>Jeunes Étudiants Adventistes de Parakou - Université de Parakou, Bénin.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Liens</h3>
+        <ul class="space-y-1">
+           <li><a href="a-propos.html" class="hover:underline">À propos</a></li>
+          <li><a href="documents.html" class="hover:underline">Documents</a></li>
+          <li><a href="actualites.html" class="hover:underline">Actualités</a></li>
+          <li><a href="contact.html" class="hover:underline">Contact</a></li>
+          <li><a href="inscription.html" class="hover:underline">Devenir membre</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Légal</h3>
+        <ul class="space-y-1">
+          <li><a href="mentions-legales.html" class="hover:underline">Mentions légales</a></li>
+          <li><a href="confidentialite.html" class="hover:underline">Confidentialité</a></li>
+          <li><a href="cgu.html" class="hover:underline">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center text-white/70 text-xs pb-4">&copy; <span id="current-year"></span> JEAP. Tous droits réservés.</div>
+  </footer>
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/nav.js"></script>
+</body>
+</html>

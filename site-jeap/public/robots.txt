@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /pages/admin.html
+
+Sitemap: https://www.jeap-parakou.org/sitemap.xml

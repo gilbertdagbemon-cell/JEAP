@@ -1,0 +1,14 @@
+ETAPE 4 - Audit CSS / Tailwind / Responsive
+
+Corrections appliquees:
+- amelioration du rendu global avec antialiasing
+- activation du defilement fluide
+- optimisation des images responsives
+- harmonisation des boutons CTA
+- ajout d'un composant card reutilisable
+- amelioration des transitions
+
+A verifier apres installation:
+- lancer npm run build pour regenerer dist/output.css
+- tester mobile 320px, 375px, tablette et desktop
+- verifier les classes Tailwind personnalisees dans tailwind.config.js

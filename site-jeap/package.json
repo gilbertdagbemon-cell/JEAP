@@ -1,0 +1,18 @@
+{
+  "name": "jeap-site",
+  "version": "1.0.0",
+  "description": "Site JEAP - plateforme de partage de documents academiques",
+  "scripts": {
+    "dev:css": "tailwindcss -i ./src/input.css -o ./public/dist/output.css --watch",
+    "build:css": "tailwindcss -i ./src/input.css -o ./public/dist/output.css --minify",
+    "serve": "npx serve public"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="robots" content="index, follow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JEAP - Jeunes Etudiants Adventistes de Parakou</title>
+  <meta name="author" content="Gilbert DAGBEMON">
+
+  <meta name="description" content="Plateforme de partage de documents academiques pour les etudiants adventistes de l'Universite de Parakou : cours, epreuves, corriges, TD/TP, memoires.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pemdigpakfpomjpaynlv.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="dist/output.css">
+  <meta property="og:title" content="JEAP - Jeunes Etudiants Adventistes de Parakou">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.jeap-parakou.org/assets/images/logo.png">
+    <meta name="theme-color" content="#2563eb">
+  </head>
+<body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/images/logo.png" alt="Logo JEAP" width="40" height="40" loading="lazy">
+        <span class="font-semibold text-lg">JEAP</span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="index.html" class="hover:text-jeap-accent-dark">Accueil</a>
+        <a href="pages/a-propos.html" class="hover:text-jeap-accent-dark">À propos</a>
+        <a href="pages/documents.html" class="hover:text-jeap-accent-dark">Documents</a>
+        <a href="pages/actualites.html" class="hover:text-jeap-accent-dark">Actualités</a>
+        <a href="pages/contact.html" class="hover:text-jeap-accent-dark">Contact</a>
+        <a href="pages/admin.html" class="nav-admin-link hidden hover:text-jeap-accent-dark">Admin</a>
+        <div class="nav-guest flex items-center gap-3">
+          <a href="pages/connexion.html" class="btn-secondary text-sm">Connexion</a>
+          <a href="pages/inscription.html" class="btn-cta text-sm">Inscription</a>
+        </div>
+        <div class="nav-user hidden flex items-center gap-3">
+          <a href="pages/depot.html" class="btn-cta text-sm">+ Déposer</a>
+          <button class="btn-logout btn-secondary text-sm">Deconnexion</button>
+        </div>
+      </nav>
+
+      <!-- Bouton menu mobile -->
+      <button id="menu-toggle" class="md:hidden p-2" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Nav mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden flex-col gap-1 px-4 pb-4 text-sm font-medium">
+      <a href="index.html" class="block py-2">Accueil</a>
+      <a href="pages/a-propos.html" class="block py-2">À propos</a>
+      <a href="pages/documents.html" class="block py-2">Documents</a>
+      <a href="pages/actualites.html" class="block py-2">Actualités</a>
+      <a href="pages/contact.html" class="block py-2">Contact</a>
+      <a href="pages/admin.html" class="nav-admin-link hidden py-2">Admin</a>
+      <a href="pages/connexion.html" class="nav-guest block py-2">Connexion</a>
+      <a href="pages/inscription.html" class="nav-guest block py-2 font-semibold text-jeap-accent-dark">Inscription</a>
+      <a href="pages/depot.html" class="nav-user hidden py-2 font-semibold text-jeap-accent-dark">+ Deposer un document</a>
+      <button class="btn-logout nav-user hidden py-2 text-left w-full">Déconnexion</button>
+    </nav>
+  </header>
+
+  <main class="flex-1">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="bg-jeap-green text-white">
+      <div class="max-w-6xl mx-auto px-4 py-14 md:py-20 flex flex-col md:flex-row items-center gap-10">
+        <div class="flex-1 text-center md:text-left">
+          <h1 class="text-2xl md:text-4xl font-bold leading-tight">
+            Tous vos cours, épreuves et corrigés,<br class="hidden md:block"> au même endroit
+          </h1>
+          <p class="mt-4 text-white/85 max-w-xl">
+            JEAP centralise les documents academiques des étudiants adventistes de l'Université de Parakou,
+            classés par faculté, filière, niveau et année. Consultez, déposez, partagez.
+          </p>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+            <a href="pages/documents.html" class="btn-cta text-center">Explorer les documents</a>
+            <a href="pages/inscription.html" class="btn-secondary text-center border-white text-white hover:bg-white hover:text-jeap-green">Creer un compte</a>
+          </div>
+        </div>
+        <div class="flex-shrink-0">
+          <img src="assets/images/logo.png" alt="Logo JEAP" width="120" height="120" loading="lazy" class="opacity-95">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RECHERCHE RAPIDE ===================== -->
+    <section class="max-w-6xl mx-auto px-4 -mt-6 md:-mt-8 relative z-10">
+      <form action="pages/documents.html" method="get" class="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-3">
+        <label for="quick-search" class="sr-only">Rechercher un document</label>
+        <input
+          id="quick-search"
+          name="q"
+          type="text"
+          placeholder="Rechercher une matiere, un titre, un mot-cle..."
+          class="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent"
+        >
+        <button type="submit" class="btn-cta whitespace-nowrap">Rechercher</button>
+      </form>
+    </section>
+
+    <!-- ===================== STATISTIQUES ===================== -->
+    <section class="max-w-6xl mx-auto px-4 py-10">
+      <div id="stats-grid" class="grid grid-cols-3 gap-4 text-center">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 py-5">
+          <p id="stat-documents" class="text-2xl md:text-3xl font-bold text-jeap-accent-dark">
+            <span class="inline-block w-8 h-6 bg-gray-100 rounded animate-pulse"></span>
+          </p>
+          <p class="text-xs md:text-xs text-gray-500 mt-1">Documents disponibles</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 py-5">
+          <p id="stat-members" class="text-2xl md:text-3xl font-bold text-jeap-accent-dark">
+            <span class="inline-block w-8 h-6 bg-gray-100 rounded animate-pulse"></span>
+          </p>
+          <p class="text-xs md:text-xs text-gray-500 mt-1">Membres actifs</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm border border-gray-100 py-5">
+          <p id="stat-faculties" class="text-2xl md:text-3xl font-bold text-jeap-accent-dark">
+            <span class="inline-block w-8 h-6 bg-gray-100 rounded animate-pulse"></span>
+          </p>
+          <p class="text-xs md:text-xs text-gray-500 mt-1">Facultés couvertes</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== ACCES PAR FACULTE / ECOLE ===================== -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-xl font-semibold mb-1">Parcourir par faculté / école</h2>
+      <p class="text-sm text-gray-600 mb-6">
+    
+      </p>
+
+      <!-- Grille remplie dynamiquement en JS -->
+      <div id="faculties-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <!-- Squelettes de chargement (lazy) affiches en attendant les donnees reelles -->
+        <div class="animate-pulse bg-white rounded-lg shadow-sm p-4 h-20"></div>
+        <div class="animate-pulse bg-white rounded-lg shadow-sm p-4 h-20"></div>
+        <div class="animate-pulse bg-white rounded-lg shadow-sm p-4 h-20"></div>
+        <div class="animate-pulse bg-white rounded-lg shadow-sm p-4 h-20"></div>
+      </div>
+    </section>
+
+    <!-- ===================== ACTUALITES JEAP ===================== -->
+    <section class="bg-white border-t border-gray-100">
+      <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-semibold">Actualités JEAP</h2>
+          <a href="pages/actualites.html" class="text-sm font-medium text-jeap-accent-dark hover:underline">Voir tout</a>
+        </div>
+
+        <!-- Les 3-4 derniers articles seront charges dynamiquement (table "news") -->
+        <div id="news-grid" class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <article class="border border-gray-100 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 h-28 animate-pulse"></div>
+            <div class="p-3">
+              <p class="text-xs text-gray-500">Chargement...</p>
+            </div>
+          </article>
+          <article class="border border-gray-100 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 h-28 animate-pulse"></div>
+            <div class="p-3">
+              <p class="text-xs text-gray-500">Chargement...</p>
+            </div>
+          </article>
+          <article class="border border-gray-100 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 h-28 animate-pulse"></div>
+            <div class="p-3">
+              <p class="text-xs text-gray-500">Chargement...</p>
+            </div>
+          </article>
+          <article class="border border-gray-100 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 h-28 animate-pulse"></div>
+            <div class="p-3">
+              <p class="text-xs text-gray-500">Chargement...</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-jeap-green text-white/90 text-sm">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid sm:grid-cols-3 gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="assets/images/logo.png" alt="Logo JEAP" width="28" height="28" loading="lazy">
+          <span class="font-semibold text-white">JEAP</span>
+        </div>
+        <p>Jeunes Etudiants Adventistes de Parakou - Université de Parakou, Bénin.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Liens</h3>
+        <ul class="space-y-1">
+                    <li><a href="pages/a-propos.html" class="hover:underline">À propos</a></li>
+          <li><a href="pages/documents.html" class="hover:underline">Documents</a></li>
+          <li><a href="pages/actualites.html" class="hover:underline">Actualités</a></li>
+          <li><a href="pages/contact.html" class="hover:underline">Contact</a></li>
+          <li><a href="pages/inscription.html" class="hover:underline">Devenir membre</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Legal</h3>
+        <ul class="space-y-1">
+          <li><a href="pages/mentions-legales.html" class="hover:underline">Mentions légales</a></li>
+          <li><a href="pages/confidentialite.html" class="hover:underline">Confidentialité</a></li>
+          <li><a href="pages/cgu.html" class="hover:underline">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center text-white/70 text-xs pb-4">&copy; <span id="current-year"></span> JEAP. Tous droits reserves.</div>
+  </footer>
+
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      var menu = document.getElementById("mobile-menu");
+      var expanded = this.getAttribute("aria-expanded") === "true";
+      this.setAttribute("aria-expanded", String(!expanded));
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+    });
+  </script>
+  <script type="module" src="js/home.js"></script>
+  <script type="module" src="js/stats.js"></script>
+  <script type="module" src="js/news.js"></script>
+  <script type="module" src="js/nav.js"></script>
+</body>
+</html>

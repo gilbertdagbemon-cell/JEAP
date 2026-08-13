@@ -1,0 +1,23 @@
+Dossier des photos du bureau exécutif (ARCHIVÉ)
+=================================================
+
+⚠️ Ce dossier n'est plus utilisé pour gérer les photos du bureau.
+
+Le bureau exécutif est désormais géré depuis le panneau d'administration
+du site (page Admin > section "Bureau exécutif") : ajouter, modifier ou
+supprimer un membre (nom, poste, photo, e-mail, WhatsApp, Facebook) se
+fait directement en ligne, sans toucher au code ni déposer de fichier ici.
+Les photos uploadées depuis l'admin sont stockées dans Supabase Storage
+(bucket "jeap-docs", dossier "bureau/"), pas dans ce dossier local.
+
+Le fichier president.png resté dans ce dossier est conservé uniquement
+comme référence historique ; tu peux le ré-uploader depuis l'admin si tu
+veux réutiliser cette même photo pour le président actuel.
+
+Conseils pour toute nouvelle photo (valables aussi via l'admin) :
+  - Format carré recommandé (ex: 300x300 px, ou 500x500 px), .jpg ou .png
+  - Poids léger (< 300 Ko) pour que le site reste rapide
+  - Cadrage portrait, visage centré
+
+Tant qu'aucune photo n'est renseignée pour un membre, l'icône 👤 s'affiche
+automatiquement à la place — rien ne casse sur le site.

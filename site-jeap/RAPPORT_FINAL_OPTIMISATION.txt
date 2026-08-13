@@ -1,0 +1,12 @@
+ETAPE FINALE - OPTIMISATION DEPLOIEMENT
+
+Ajouts:
+- page 404.html
+- robots.txt
+- sitemap.xml
+
+Recommandations:
+- activer HTTPS chez l'hebergeur
+- compresser les images
+- verifier les variables Supabase avant production
+- tester les formulaires apres deploiement

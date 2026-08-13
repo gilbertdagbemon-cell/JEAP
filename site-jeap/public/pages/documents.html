@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="robots" content="index, follow">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliothèque de Documents - JEAP</title>
+    <meta name="description" content="Plateforme JEAP de partage de documents académiques pour les étudiants adventistes de Parakou.">
+  <meta name="author" content="Gilbert DAGBEMON">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pemdigpakfpomjpaynlv.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../dist/output.css">
+  <meta property="og:title" content="Bibliothèque de Documents - JEAP">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.jeap-parakou.org/assets/images/logo.png">
+    <meta name="theme-color" content="#2563eb">
+  </head>
+<body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../assets/images/logo.png" alt="Logo JEAP" width="40" height="40" loading="lazy">
+        <span class="font-semibold text-lg">JEAP</span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="hover:text-jeap-accent-dark">Accueil</a>
+        <a href="documents.html" class="font-bold text-jeap-accent-dark">Documents</a>
+        <a href="actualites.html" class="hover:text-jeap-accent-dark">Actualités</a>
+        <a href="a-propos.html" class="hover:text-jeap-accent-dark">À propos</a>
+        <a href="contact.html" class="hover:text-jeap-accent-dark">Contact</a>
+        <a href="admin.html" class="nav-admin-link hidden hover:text-jeap-accent-dark">Admin</a>
+        <div class="nav-guest flex items-center gap-3">
+          <a href="connexion.html" class="btn-secondary text-sm">Connexion</a>
+          <a href="inscription.html" class="btn-cta text-sm">Inscription</a>
+        </div>
+        <div class="nav-user hidden flex items-center gap-3">
+          <a href="depot.html" class="btn-cta text-sm">+ Déposer</a>
+          <button class="btn-logout btn-secondary text-sm">Déconnexion</button>
+        </div>
+      </nav>
+
+      <!-- Bouton menu mobile -->
+      <button id="menu-toggle" class="md:hidden p-2" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Nav mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden flex-col gap-1 px-4 pb-4 text-sm font-medium">
+      <a href="../index.html" class="block py-2">Accueil</a>
+      <a href="documents.html" class="block py-2 font-semibold text-jeap-accent-dark">Documents</a>
+      <a href="actualites.html" class="block py-2">Actualités</a>
+      <a href="a-propos.html" class="block py-2">À propos</a>
+      <a href="contact.html" class="block py-2">Contact</a>
+      <a href="admin.html" class="nav-admin-link hidden py-2">Admin</a>
+      <a href="connexion.html" class="nav-guest block py-2">Connexion</a>
+      <a href="inscription.html" class="nav-guest block py-2">Inscription</a>
+      <a href="depot.html" class="nav-user hidden py-2 font-semibold text-jeap-accent-dark">+ Déposer un document</a>
+      <button class="btn-logout nav-user hidden py-2 text-left w-full">Déconnexion</button>
+    </nav>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
+    
+    <!-- Entête de page -->
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold">Base Documentaire</h1>
+      <p class="text-xs text-gray-500">Recherchez et consultez les épreuves, cours et TD de l'Université de Parakou.</p>
+    </div>
+
+    <!-- Barre de recherche et filtres -->
+    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 mb-6 space-y-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+        
+        <!-- Champ Recherche -->
+        <input type="text" id="search-input" placeholder="Rechercher par titre..." 
+               class="lg:col-span-1 border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+        
+        <!-- Filtre Faculté / École -->
+        <select id="filter-faculty" class="border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          <option value="">Toutes les facultés/écoles</option>
+          <option value="FA">FA</option>
+          <option value="FASEG">FASEG</option>
+          <option value="FDSP">FDSP</option>
+          <option value="FLASH">FLASH</option>
+          <option value="FM">FM</option>
+          <option value="IUT">IUT Parakou</option>
+          <option value="ENSPD">ENSPD</option>
+          <option value="IFSIO">IFSIO</option>
+          <option value="ENSAGAP">ENSAGAP</option>
+          <option value="ENATSE">ENATSE</option>
+          <option value="ENSAP">ENSAP</option>
+        </select>
+
+        <!-- Filtre Filière (Nouveau) -->
+        <select id="filter-department" class="border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          <option value="">Toutes les filières</option>
+
+          <optgroup label="FA (Agronomie)">
+            <option value="STPV">Sciences et Techniques de Production Végétale</option>
+            <option value="STPA">Sciences et Techniques de Production Animale</option>
+            <option value="AGRN">Aménagement et Gestion des Ressources Naturelles</option>
+            <option value="ESR">Économie et Sociologie Rurale</option>
+          </optgroup>
+
+          <optgroup label="FASEG (Économie & Gestion)">
+            <option value="FC">Finance et Comptabilité (FC)</option>
+            <option value="MMO">Marketing et Management des Organisations (MMO)</option>
+            <option value="APE">Analyse et Politiques Économiques (APE)</option>
+            <option value="EFI">Économie et Finance Internationale (EFI)</option>
+          </optgroup>
+
+          <optgroup label="FDSP (Droit & Sc. Politique)">
+            <option value="Droit Prive">Droit Privé</option>
+            <option value="Droit Public">Droit Public</option>
+            <option value="Sc Politique">Science Politique</option>
+          </optgroup>
+
+          <optgroup label="FLASH (Lettres & Sc. Humaines)">
+            <option value="GAT">Géographie et Aménagement du Territoire</option>
+            <option value="Socio-Anthro">Sociologie-Anthropologie</option>
+            <option value="Anglais">Études Anglophones</option>
+            <option value="Lettres Modernes">Lettres Modernes</option>
+            <option value="Histoire-Archo">Histoire et Archéologie</option>
+          </optgroup>
+
+          <optgroup label="FM (Médecine)">
+            <option value="Medecine Generale">Médecine Générale</option>
+          </optgroup>
+
+          <optgroup label="IUT (Technologie)">
+            <option value="IG">Informatique de Gestion (IG)</option>
+            <option value="SIL">Systèmes Informatiques et Logiciels (SIL)</option>
+            <option value="GB">Gestion des Banques (GB)</option>
+            <option value="GE">Gestion des Entreprises (GE)</option>
+            <option value="GC">Gestion Commerciale (GC)</option>
+            <option value="GTL">Gestion des Transports et Logistique (GTL)</option>
+            <option value="GRH">Gestion des Ressources Humaines (GRH)</option>
+          </optgroup>
+
+          <optgroup label="ENSPD (Statistique)">
+            <option value="SEF">Statistiques Économiques et Financières</option>
+            <option value="DSS">Démographie et Statistiques Sociales</option>
+            <option value="PDL">Planification du Développement Local</option>
+          </optgroup>
+
+          <optgroup label="IFSIO (Santé)">
+            <option value="Soins Infirmiers">Soins Infirmiers</option>
+            <option value="Sciences Obstetricales">Sciences Obstétricales</option>
+          </optgroup>
+
+          <optgroup label="ENSAGAP (Aires Protégées)">
+            <option value="GFAP">Gestion de la Faune et des Aires Protégées</option>
+            <option value="Ecosystemes">Aménagement des Écosystèmes</option>
+          </optgroup>
+
+          <optgroup label="ENATSE (Santé Publique)">
+            <option value="ESS">Épidémiologie et Surveillance Sanitaire</option>
+            <option value="AHS">Hygiène, Assainissement et Salubrité</option>
+          </optgroup>
+
+          <optgroup label="ENSAP (Agro-Pastoral)">
+            <option value="PAP">Productions Animales et Pastorales</option>
+            <option value="EAE">Entrepreneuriat Agricole et Élevage</option>
+          </optgroup>
+        </select>
+
+        <!-- Filtre Niveau -->
+        <select id="filter-level" class="border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          <option value="">Tous les niveaux</option>
+          <option value="L1">L1</option>
+          <option value="L2">L2</option>
+          <option value="L3">L3</option>
+          <option value="M1">M1</option>
+          <option value="M2">M2</option>
+        </select>
+
+        <!-- Filtre Type -->
+        <select id="filter-type" class="border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          <option value="">Tous les types</option>
+          <option value="cours">Cours</option>
+          <option value="epreuve">Épreuve</option>
+          <option value="corrige">Corrigé</option>
+          <option value="td_tp">TD / TP</option>
+        </select>
+        <select id="filter-year" class="border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent">
+          <option value="">Toutes les années</option>
+        </select>
+
+      </div>
+    </div>
+
+    <!-- Conteneur de la liste des documents -->
+    <div id="documents-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Les cartes de documents seront injectées ici dynamiquement -->
+      <p class="text-xs text-gray-500 col-span-full text-center py-8">Chargement des documents...</p>
+    </div>
+
+  </main>
+
+  <!-- Modal pour l'aperçu PDF / Document -->
+  <div id="preview-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl h-[85vh] rounded-lg flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+        <h3 id="modal-title" class="font-semibold text-sm truncate">Aperçu du document</h3>
+        <button id="close-modal" type="button" aria-label="Fermer l'aperçu" class="text-gray-500 hover:text-red-500 font-bold px-2 py-1 text-lg">&times;</button>
+      </div>
+      <div class="flex-1 bg-gray-100 p-2">
+        <iframe id="pdf-frame" class="w-full h-full border-0 rounded" src=""></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-jeap-green text-white/90 text-sm">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid sm:grid-cols-3 gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="../assets/images/logo.png" alt="Logo JEAP" width="28" height="28" loading="lazy">
+          <span class="font-semibold text-white">JEAP</span>
+        </div>
+        <p>Jeunes Étudiants Adventistes de Parakou - Université de Parakou, Bénin.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Liens</h3>
+        <ul class="space-y-1">
+          <li><a href="a-propos.html" class="hover:underline">À propos</a></li>
+          <li><a href="documents.html" class="hover:underline">Documents</a></li>
+          <li><a href="actualites.html" class="hover:underline">Actualités</a></li>
+          <li><a href="contact.html" class="hover:underline">Contact</a></li>
+          <li><a href="inscription.html" class="hover:underline">Devenir membre</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Légal</h3>
+        <ul class="space-y-1">
+          <li><a href="mentions-legales.html" class="hover:underline">Mentions légales</a></li>
+          <li><a href="confidentialite.html" class="hover:underline">Confidentialité</a></li>
+          <li><a href="cgu.html" class="hover:underline">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center text-white/70 text-xs pb-4">&copy; <span id="current-year"></span> JEAP. Tous droits réservés.</div>
+  </footer>
+
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      var menu = document.getElementById("mobile-menu");
+      var expanded = this.getAttribute("aria-expanded") === "true";
+      this.setAttribute("aria-expanded", String(!expanded));
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+    });
+  </script>
+
+  <script type="module" src="../js/documents.js"></script>
+  <script type="module" src="../js/nav.js"></script>
+</body>
+</html>

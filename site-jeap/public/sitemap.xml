@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ⚠️ DOMAINE PROVISOIRE : "https://www.jeap-parakou.org" est un nom d'exemple.
+     Dès que le nom de domaine définitif est connu, remplace-le ICI et dans :
+       - public/robots.txt (ligne Sitemap:)
+       - le contenu og:image de public/index.html, public/pages/a-propos.html,
+         public/pages/contact.html, public/pages/actualites.html, public/pages/documents.html
+     Une simple recherche/remplacement de "jeap-parakou.org" suffit sur tout le projet. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://www.jeap-parakou.org/index.html</loc></url>
+<url><loc>https://www.jeap-parakou.org/pages/documents.html</loc></url>
+<url><loc>https://www.jeap-parakou.org/pages/actualites.html</loc></url>
+<url><loc>https://www.jeap-parakou.org/pages/contact.html</loc></url>
+<url><loc>https://www.jeap-parakou.org/pages/a-propos.html</loc></url>
+</urlset>

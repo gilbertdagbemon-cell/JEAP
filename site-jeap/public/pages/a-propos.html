@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Gilbert DAGBEMON">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>À propos - JEAP</title>
+  <meta name="description" content="Découvrez la mission, les valeurs et le bureau exécutif des Jeunes Étudiants Adventistes de Parakou (JEAP).">
+  <meta property="og:title" content="À propos - JEAP">
+  <meta property="og:description" content="Découvrez la mission, les valeurs et le bureau exécutif des Jeunes Étudiants Adventistes de Parakou (JEAP).">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.jeap-parakou.org/assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pemdigpakfpomjpaynlv.supabase.co">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../dist/output.css">
+    <meta name="theme-color" content="#2563eb">
+</head>
+<body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../assets/images/logo.png" alt="Logo JEAP" width="40" height="40" loading="lazy">
+        <span class="font-semibold text-lg">JEAP</span>
+      </a>
+
+      <!-- Nav desktop -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="../index.html" class="hover:text-jeap-accent-dark">Accueil</a>
+        <a href="documents.html" class="hover:text-jeap-accent-dark">Documents</a>
+        <a href="actualites.html" class="hover:text-jeap-accent-dark">Actualités</a>
+        <a href="a-propos.html" class="font-bold text-jeap-accent-dark">À propos</a>
+        <a href="contact.html" class="hover:text-jeap-accent-dark">Contact</a>
+        <a href="admin.html" class="nav-admin-link hidden hover:text-jeap-accent-dark">Admin</a>
+        <div class="nav-guest flex items-center gap-3">
+          <a href="connexion.html" class="btn-secondary text-sm">Connexion</a>
+          <a href="inscription.html" class="btn-cta text-sm">Inscription</a>
+        </div>
+        <div class="nav-user hidden flex items-center gap-3">
+          <a href="depot.html" class="btn-cta text-sm">+ Deposer</a>
+          <button class="btn-logout btn-secondary text-sm">Déconnexion</button>
+        </div>
+      </nav>
+
+      <!-- Bouton menu mobile -->
+      <button id="menu-toggle" class="md:hidden p-2" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Nav mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden flex-col gap-1 px-4 pb-4 text-sm font-medium">
+      <a href="../index.html" class="block py-2">Accueil</a>
+      <a href="documents.html" class="block py-2">Documents</a>
+      <a href="actualites.html" class="block py-2">Actualités</a>
+      <a href="a-propos.html" class="block py-2 font-semibold text-jeap-accent-dark">À propos</a>
+      <a href="contact.html" class="block py-2">Contact</a>
+      <a href="admin.html" class="nav-admin-link hidden py-2">Admin</a>
+      <a href="connexion.html" class="nav-guest block py-2">Connexion</a>
+      <a href="inscription.html" class="nav-guest block py-2">Inscription</a>
+      <a href="depot.html" class="nav-user hidden py-2 font-semibold text-jeap-accent-dark">+ Déposer un document</a>
+      <button class="btn-logout nav-user hidden py-2 text-left w-full">Déconnexion</button>
+    </nav>
+  </header>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="flex-1">
+
+    <!-- Intro -->
+    <section class="bg-jeap-green text-white">
+      <div class="max-w-4xl mx-auto px-4 py-14 text-center">
+        <h1 class="text-2xl md:text-4xl font-bold">Qui sommes-nous ?</h1>
+        <p class="mt-4 text-white/85 max-w-2xl mx-auto">
+          JEAP (Jeunes Étudiants Adventistes de Parakou) est l'association qui rassemble les étudiants
+          adventistes de l'Université de Parakou autour de la foi, de l'entraide et de la réussite académique.
+        </p>
+      </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="max-w-4xl mx-auto px-4 py-12">
+      <h2 class="text-xl font-semibold mb-3">Notre mission</h2>
+      <p class="text-sm text-gray-700 leading-relaxed">
+        <!-- À COMPLÉTER : remplace ce texte par la vraie mission / raison d'être de l'association -->
+        La JEAP accompagne les étudiants adventistes de l'Université de Parakou tout au long de leur parcours
+        universitaire : soutien spirituel, entraide entre pairs et mise en commun des ressources académiques
+        (cours, épreuves, corrigés) pour favoriser la réussite de chacun.
+      </p>
+    </section>
+
+    <!-- Valeurs -->
+    <section class="bg-white border-t border-gray-100">
+      <div class="max-w-4xl mx-auto px-4 py-12">
+        <h2 class="text-xl font-semibold mb-6">Nos valeurs</h2>
+        <div class="grid sm:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl mb-2">🙏</div>
+            <h3 class="font-semibold text-sm mb-1">Foi</h3>
+            <p class="text-xs text-gray-600">Vivre et partager les valeurs chrétiennes adventistes au quotidien.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl mb-2">🤝</div>
+            <h3 class="font-semibold text-sm mb-1">Entraide</h3>
+            <p class="text-xs text-gray-600">Se soutenir mutuellement dans les études et la vie universitaire.</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl mb-2">🎓</div>
+            <h3 class="font-semibold text-sm mb-1">Excellence</h3>
+            <p class="text-xs text-gray-600">Viser la réussite académique et le développement personnel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bureau exécutif -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-xl font-semibold mb-1">Bureau exécutif</h2>
+      <p class="text-xs text-gray-500 mb-6">Année académique 2026-2027</p>
+
+      <!--
+        ===================== BUREAU EXÉCUTIF (DYNAMIQUE) =====================
+        Cette grille est entièrement remplie par public/js/bureau.js à partir
+        de la table Supabase "bureau_members". Pour ajouter, modifier ou
+        retirer un membre (nom, poste, photo, réseaux sociaux), passe par le
+        panneau d'administration (pages/admin.html, section "Bureau
+        exécutif") — aucune modification de ce fichier HTML n'est nécessaire.
+      -->
+      <div id="bureau-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- Squelettes de chargement (lazy) affichés en attendant les données réelles -->
+        <div class="animate-pulse bg-white rounded-xl shadow-sm border border-gray-100 p-6 h-48"></div>
+        <div class="animate-pulse bg-white rounded-xl shadow-sm border border-gray-100 p-6 h-48"></div>
+        <div class="animate-pulse bg-white rounded-xl shadow-sm border border-gray-100 p-6 h-48"></div>
+      </div>
+      <p class="text-xs text-gray-500 mt-6 text-center">
+        Envie de rejoindre l'aventure ? <a href="inscription.html" class="text-jeap-accent-dark hover:underline font-semibold">Créez votre compte</a>
+        ou <a href="contact.html" class="text-jeap-accent-dark hover:underline font-semibold">contactez-nous</a>.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-jeap-green text-white/90 text-sm">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid sm:grid-cols-3 gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <img src="../assets/images/logo.png" alt="Logo JEAP" width="28" height="28" loading="lazy">
+          <span class="font-semibold text-white">JEAP</span>
+        </div>
+        <p>Jeunes Étudiants Adventistes de Parakou - Université de Parakou, Bénin.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Liens</h3>
+        <ul class="space-y-1">
+          <li><a href="a-propos.html" class="hover:underline">À propos</a></li>
+          <li><a href="documents.html" class="hover:underline">Documents</a></li>
+          <li><a href="actualites.html" class="hover:underline">Actualités</a></li>
+          <li><a href="contact.html" class="hover:underline">Contact</a></li>
+          <li><a href="inscription.html" class="hover:underline">Devenir membre</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-white font-medium mb-2">Légal</h3>
+        <ul class="space-y-1">
+          <li><a href="mentions-legales.html" class="hover:underline">Mentions légales</a></li>
+          <li><a href="confidentialite.html" class="hover:underline">Confidentialité</a></li>
+          <li><a href="cgu.html" class="hover:underline">Conditions d'utilisation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center text-white/70 text-xs pb-4">&copy; <span id="current-year"></span> JEAP. Tous droits réservés.</div>
+  </footer>
+
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      var menu = document.getElementById("mobile-menu");
+      var expanded = this.getAttribute("aria-expanded") === "true";
+      this.setAttribute("aria-expanded", String(!expanded));
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+    });
+  </script>
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/bureau.js"></script>
+</body>
+</html>
