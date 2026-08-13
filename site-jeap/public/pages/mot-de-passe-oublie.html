@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Gilbert DAGBEMON">
+    <meta name="robots" content="noindex, nofollow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription - JEAP</title>
+  <title>Mot de passe oublié - JEAP</title>
+    <meta name="description" content="Réinitialisez le mot de passe de votre compte JEAP.">
+  <meta name="author" content="Gilbert DAGBEMON">
+
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
@@ -16,8 +18,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../dist/output.css">
+  <meta property="og:title" content="Mot de passe oublié - JEAP">
+    <meta property="og:type" content="website">
     <meta name="theme-color" content="#2563eb">
-</head>
+  </head>
 <body class="min-h-screen flex flex-col bg-jeap-bg text-jeap-green">
 
   <!-- Header -->
@@ -35,65 +39,28 @@
     </div>
   </header>
 
-  <!-- Formulaire d'inscription -->
+  <!-- Formulaire mot de passe oublié -->
   <main class="flex-1 flex items-center justify-center p-4">
     <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full border border-gray-100">
-      <h1 class="text-2xl font-bold mb-2 text-center">Créer un compte</h1>
+      <h1 class="text-2xl font-bold mb-2 text-center">Mot de passe oublié</h1>
       <p class="text-xs text-gray-500 mb-6 text-center">
-        Rejoignez la communauté JEAP.
+        Indiquez votre adresse e-mail, nous vous enverrons un lien pour créer un nouveau mot de passe.
       </p>
 
-      <!-- ID aligne sur celui utilise par auth.js (alert-box) -->
       <div id="alert-box" class="hidden mb-4 p-3 text-xs rounded-md"></div>
 
-      <form id="signup-form" class="space-y-4">
-        <div>
-          <!-- ID ajusté en last-name -->
-          <label for="last-name" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Nom</label>
-          <input type="text" id="last-name" required pattern="[a-zA-ZÀ-ÿ\s\-]+" title="Lettres uniquement (aucun chiffre)"
-            class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="ex. DAGBEMON">
-        </div>
-
-        <div>
-          <!-- ID ajusté en first-name -->
-          <label for="first-name" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Prénom</label>
-          <input type="text" id="first-name" required pattern="[a-zA-ZÀ-ÿ\s\-]+" title="Lettres uniquement (aucun chiffre)"
-            class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="ex. Gilbert">
-        </div>
-
+      <form id="forgot-form" class="space-y-4">
         <div>
           <label for="email" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Adresse e-mail</label>
           <input type="email" id="email" required
             class="w-full border border-gray-200 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="votre.email@exemple.com">
         </div>
 
-        <div>
-          <label for="password" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Mot de passe</label>
-          <div class="relative">
-            <input type="password" id="password" minlength="8" required
-              class="w-full border border-gray-200 rounded px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="8+ chars (lettres et chiffres)">
-            <button type="button" class="toggle-password absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-jeap-accent-dark" data-target="password" aria-label="Afficher le mot de passe">
-              👁️
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label for="confirm-password" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Confirmez le mot de passe</label>
-          <div class="relative">
-            <input type="password" id="confirm-password" minlength="8" required
-              class="w-full border border-gray-200 rounded px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="Ressaisissez le mot de passe">
-            <button type="button" class="toggle-password absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-jeap-accent-dark" data-target="confirm-password" aria-label="Afficher le mot de passe">
-              👁️
-            </button>
-          </div>
-        </div>
-
-        <button type="submit" id="btn-submit" class="btn-cta w-full mt-2 py-2.5">S'inscrire</button>
+        <button type="submit" class="btn-cta w-full py-2.5">Envoyer le lien de réinitialisation</button>
       </form>
 
       <p class="text-xs text-center text-gray-500 mt-6">
-        Déjà un compte ? <a href="connexion.html" class="text-jeap-accent-dark hover:underline font-semibold">Se connecter</a>
+        <a href="connexion.html" class="text-jeap-accent-dark hover:underline font-semibold">&larr; Retour à la connexion</a>
       </p>
     </div>
   </main>
@@ -111,7 +78,7 @@
       <div>
         <h3 class="text-white font-medium mb-2">Liens</h3>
         <ul class="space-y-1">
-           <li><a href="a-propos.html" class="hover:underline">À propos</a></li>
+          <li><a href="a-propos.html" class="hover:underline">À propos</a></li>
           <li><a href="documents.html" class="hover:underline">Documents</a></li>
           <li><a href="actualites.html" class="hover:underline">Actualités</a></li>
           <li><a href="contact.html" class="hover:underline">Contact</a></li>

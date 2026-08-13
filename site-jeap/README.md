@@ -71,6 +71,7 @@ Aucune action d'hebergement n'est effectuee automatiquement par l'IA : ces etape
 - Dans le panneau d'administration du site (page Admin > section "Bureau exécutif"), saisir la composition
   actuelle du bureau (les données de départ sont pré-remplies par la migration, il ne reste qu'à uploader
   les photos et vérifier les coordonnées).
-- Remplacer le nom de domaine provisoire "jeap-parakou.org" par le vrai nom de domaine une fois connu,
-  dans `public/sitemap.xml`, `public/robots.txt` et les balises `og:image` des pages (recherche/remplacement).
+- ✅ Nom de domaine mis à jour : le site utilise désormais `https://gilbertdagbemon-cell.github.io/JEAP/`
+  dans `public/sitemap.xml`, `public/robots.txt` et les balises `og:image` des pages. Si un nom de domaine
+  personnalisé est configuré un jour, refaire une recherche/remplacement sur ces mêmes fichiers.
 - Deployer le site (voir section Hebergement ci-dessus).

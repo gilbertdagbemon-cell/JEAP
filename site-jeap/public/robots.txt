@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /pages/admin.html
+Disallow: /JEAP/pages/admin.html
 
-Sitemap: https://www.jeap-parakou.org/sitemap.xml
+Sitemap: https://gilbertdagbemon-cell.github.io/JEAP/sitemap.xml

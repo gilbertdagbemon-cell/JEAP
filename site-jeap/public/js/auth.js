@@ -2,6 +2,8 @@ import { supabase } from './supabaseClient.js';
 
 const signupForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
+const forgotForm = document.getElementById('forgot-form');
+const resetForm = document.getElementById('reset-form');
 const alertBox = document.getElementById('alert-box');
 
 function showAlert(message, isError = false) {
@@ -11,15 +13,69 @@ function showAlert(message, isError = false) {
   alertBox.classList.remove('hidden');
 }
 
+// Traduit/reformule les messages d'erreur bruts de Supabase Auth (souvent en
+// anglais et peu explicites pour un utilisateur final francophone) en
+// messages clairs et cohérents avec le reste du site.
+function translateAuthError(err) {
+  const raw = err?.message || '';
+
+  if (raw.includes('security purposes')) {
+    return 'Veuillez patienter quelques instants avant de réessayer.';
+  }
+  if (raw.includes('rate limit')) {
+    return 'Trop de tentatives ont été effectuées. Merci de réessayer dans quelques minutes.';
+  }
+  if (raw.includes('already registered') || raw.includes('User already registered')) {
+    return 'Un compte existe déjà avec cette adresse e-mail.';
+  }
+  if (raw.includes('Invalid login credentials')) {
+    return 'E-mail ou mot de passe incorrect.';
+  }
+  if (raw.includes('Email not confirmed')) {
+    return 'Veuillez confirmer votre adresse e-mail avant de vous connecter (vérifiez vos spams).';
+  }
+  if (raw.includes('Password should be at least')) {
+    return 'Le mot de passe est trop court.';
+  }
+  if (raw.includes('same_password') || raw.includes('New password should be different')) {
+    return 'Le nouveau mot de passe doit être différent de l\'ancien.';
+  }
+  if (raw.includes('Auth session missing') || raw.includes('Invalid Refresh Token')) {
+    return 'Ce lien de réinitialisation est invalide ou a expiré. Veuillez en redemander un.';
+  }
+
+  return raw || 'Une erreur est survenue. Veuillez réessayer.';
+}
+
+// Bascule un bouton de soumission en état "chargement" : le désactive pour
+// empêcher les double-clics / doubles soumissions, et restaure son libellé
+// d'origine une fois terminé (à appeler dans un `finally`).
+function setLoading(button, isLoading, loadingLabel) {
+  if (!button) return () => {};
+  if (isLoading) {
+    button.dataset.originalLabel = button.dataset.originalLabel || button.textContent;
+    button.disabled = true;
+    button.textContent = loadingLabel;
+  } else {
+    button.disabled = false;
+    button.textContent = button.dataset.originalLabel || button.textContent;
+  }
+}
+
+// ============================================================
 // Inscription
+// ============================================================
 if (signupForm) {
   signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
+    const submitBtn = signupForm.querySelector('button[type="submit"]');
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : password;
 
     // Validation des critères de mot de passe (8 chars min, lettres + chiffres)
     const hasLetter = /[a-zA-Z]/.test(password);
@@ -29,8 +85,16 @@ if (signupForm) {
       return;
     }
 
+    // Vérification de la confirmation du mot de passe
+    if (password !== confirmPassword) {
+      showAlert('Les deux mots de passe ne correspondent pas.', true);
+      return;
+    }
+
+    setLoading(submitBtn, true, 'Création en cours...');
+
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -47,21 +111,28 @@ if (signupForm) {
       showAlert('Compte créé ! Vérifiez votre boîte e-mail (et vos spams) pour confirmer votre adresse via le lien reçu. Une fois confirmé, votre compte devra encore être validé par un administrateur JEAP avant de pouvoir déposer ou accéder à certains documents.');
       signupForm.reset();
     } catch (err) {
-      showAlert(err.message || 'Une erreur est survenue lors de l\'inscription.', true);
+      showAlert(translateAuthError(err), true);
+    } finally {
+      setLoading(submitBtn, false);
     }
   });
 }
 
+// ============================================================
 // Connexion
+// ============================================================
 if (loginForm) {
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
+    setLoading(submitBtn, true, 'Connexion en cours...');
+
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
       showAlert('Connexion réussie ! Redirection...');
@@ -69,7 +140,122 @@ if (loginForm) {
         window.location.href = '../index.html';
       }, 1500);
     } catch (err) {
-      showAlert(err.message || 'Identifiants incorrects.', true);
+      showAlert(translateAuthError(err), true);
+      setLoading(submitBtn, false);
+    }
+  });
+}
+
+// ============================================================
+// Mot de passe oublié — demande du lien de réinitialisation
+// ============================================================
+if (forgotForm) {
+  forgotForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = forgotForm.querySelector('button[type="submit"]');
+    const email = document.getElementById('email').value.trim();
+
+    // L'URL de callback est calculée dynamiquement (plutôt que codée en dur)
+    // pour fonctionner aussi bien en local qu'une fois déployée sur GitHub
+    // Pages, quel que soit le sous-chemin du dépôt.
+    const redirectTo = new URL('reinitialiser-mot-de-passe.html', window.location.href).href;
+
+    setLoading(submitBtn, true, 'Envoi en cours...');
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+
+      // Message volontairement générique : Supabase répond de la même façon
+      // que l'adresse existe ou non en base, pour ne pas permettre à un
+      // attaquant de vérifier quels emails sont inscrits (anti-énumération).
+      // On garde donc la même formulation ici, sans jamais indiquer si le
+      // compte a été trouvé ou non.
+      showAlert('Si un compte existe avec cette adresse, un lien de réinitialisation vient de vous être envoyé par e-mail. Pensez à vérifier vos spams.');
+      forgotForm.reset();
+    } catch (err) {
+      showAlert(translateAuthError(err), true);
+    } finally {
+      setLoading(submitBtn, false);
+    }
+  });
+}
+
+// ============================================================
+// Réinitialisation — définition du nouveau mot de passe
+// ============================================================
+if (resetForm) {
+  const resetStatus = document.getElementById('reset-status');
+  const submitBtn = resetForm.querySelector('button[type="submit"]');
+
+  // Tant que la session de récupération n'est pas confirmée, le formulaire
+  // reste désactivé pour éviter tout appel updateUser() sans contexte valide.
+  resetForm.classList.add('hidden');
+  if (submitBtn) submitBtn.disabled = true;
+
+  let recoveryConfirmed = false;
+
+  // supabase-js détecte automatiquement le token présent dans l'URL (hash
+  // #access_token=...&type=recovery) au chargement de la page et émet
+  // l'événement PASSWORD_RECOVERY une fois la session recovery établie.
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === 'PASSWORD_RECOVERY') {
+      recoveryConfirmed = true;
+      resetForm.classList.remove('hidden');
+      if (submitBtn) submitBtn.disabled = false;
+      if (resetStatus) resetStatus.classList.add('hidden');
+    }
+  });
+
+  // Filet de sécurité : si après 4 secondes aucun événement PASSWORD_RECOVERY
+  // n'a été reçu (lien expiré, déjà utilisé, ou page ouverte directement sans
+  // passer par l'email), on informe clairement l'utilisateur au lieu de le
+  // laisser face à un formulaire silencieusement inopérant.
+  setTimeout(() => {
+    if (!recoveryConfirmed && resetStatus) {
+      resetStatus.textContent = 'Ce lien de réinitialisation est invalide, a expiré, ou a déjà été utilisé. Veuillez en redemander un nouveau.';
+      resetStatus.className = 'text-xs text-center text-red-600 mb-4';
+    }
+  }, 4000);
+
+  resetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const newPassword = document.getElementById('new-password').value;
+    const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+    const hasLetter = /[a-zA-Z]/.test(newPassword);
+    const hasDigit = /\d/.test(newPassword);
+    if (newPassword.length < 8 || !hasLetter || !hasDigit) {
+      showAlert('Le mot de passe doit contenir au moins 8 caractères, incluant des lettres et des chiffres.', true);
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      showAlert('Les deux mots de passe ne correspondent pas.', true);
+      return;
+    }
+
+    setLoading(submitBtn, true, 'Mise à jour...');
+
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) throw error;
+
+      showAlert('Mot de passe mis à jour avec succès ! Vous allez être redirigé vers la page de connexion.');
+      resetForm.reset();
+      resetForm.classList.add('hidden');
+
+      // On déconnecte volontairement la session de récupération (à portée
+      // limitée) et on renvoie l'utilisateur se connecter avec son nouveau
+      // mot de passe, pour confirmer que celui-ci fonctionne bien.
+      await supabase.auth.signOut();
+      setTimeout(() => {
+        window.location.href = 'connexion.html';
+      }, 2000);
+    } catch (err) {
+      showAlert(translateAuthError(err), true);
+      setLoading(submitBtn, false);
     }
   });
 }
