@@ -6,6 +6,14 @@ const forgotForm = document.getElementById('forgot-form');
 const resetForm = document.getElementById('reset-form');
 const alertBox = document.getElementById('alert-box');
 
+// Étape 2 de l'inscription : saisie du code OTP à 6 chiffres reçu par e-mail
+// (remplace le lien de confirmation cliquable, qui posait probleme avec le
+// "click tracking" du fournisseur SMTP transactionnel).
+const otpForm = document.getElementById('otp-form');
+const otpEmailDisplay = document.getElementById('otp-email-display');
+const otpResendBtn = document.getElementById('btn-otp-resend');
+const signupFooterLink = document.getElementById('signup-footer-link');
+
 function showAlert(message, isError = false) {
   if (!alertBox) return;
   alertBox.textContent = message;
@@ -42,6 +50,9 @@ function translateAuthError(err) {
   }
   if (raw.includes('Auth session missing') || raw.includes('Invalid Refresh Token')) {
     return 'Ce lien de réinitialisation est invalide ou a expiré. Veuillez en redemander un.';
+  }
+  if (raw.includes('Token has expired') || raw.includes('Invalid token')) {
+    return 'Ce code est invalide ou a expiré. Vous pouvez en redemander un nouveau ci-dessous.';
   }
 
   return raw || 'Une erreur est survenue. Veuillez réessayer.';
@@ -108,12 +119,85 @@ if (signupForm) {
       // par le trigger handle_new_user() (SECURITY DEFINER) cote base de donnees.
       // Il ne faut PAS l'inserer une seconde fois ici, sinon erreur "duplicate key".
 
-      showAlert('Compte créé ! Vérifiez votre boîte e-mail (et vos spams) pour confirmer votre adresse via le lien reçu. Une fois confirmé, votre compte devra encore être validé par un administrateur JEAP avant de pouvoir déposer ou accéder à certains documents.');
-      signupForm.reset();
+      showAlert(`Compte créé ! Un code à 6 chiffres a été envoyé à ${email}. Saisissez-le ci-dessous (vérifiez vos spams si besoin).`);
+
+      // On bascule vers l'étape 2 : saisie du code OTP reçu par e-mail,
+      // au lieu de faire cliquer sur un lien (qui posait probleme avec le
+      // "click tracking" du fournisseur SMTP).
+      if (otpForm) {
+        signupForm.classList.add('hidden');
+        otpForm.classList.remove('hidden');
+        if (signupFooterLink) signupFooterLink.classList.add('hidden');
+        if (otpEmailDisplay) otpEmailDisplay.textContent = email;
+        // On mémorise l'e-mail pour la vérification du code et un éventuel renvoi.
+        otpForm.dataset.email = email;
+        const otpInput = document.getElementById('otp-code');
+        if (otpInput) otpInput.focus();
+      }
     } catch (err) {
       showAlert(translateAuthError(err), true);
     } finally {
       setLoading(submitBtn, false);
+    }
+  });
+}
+
+// ============================================================
+// Inscription — étape 2 : vérification du code OTP à 6 chiffres
+// ============================================================
+if (otpForm) {
+  otpForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitBtn = otpForm.querySelector('button[type="submit"]');
+    const email = otpForm.dataset.email;
+    const token = document.getElementById('otp-code').value.trim();
+
+    if (!email) {
+      showAlert('Session expirée, veuillez recommencer votre inscription.', true);
+      return;
+    }
+
+    setLoading(submitBtn, true, 'Vérification...');
+
+    try {
+      const { error } = await supabase.auth.verifyOtp({ email, token, type: 'signup' });
+      if (error) throw error;
+
+      showAlert('Adresse e-mail confirmée avec succès ! Votre compte devra encore être validé par un administrateur JEAP avant de pouvoir déposer ou accéder à certains documents. Redirection...');
+      otpForm.reset();
+      setTimeout(() => {
+        window.location.href = '../index.html';
+      }, 2000);
+    } catch (err) {
+      showAlert(translateAuthError(err), true);
+      setLoading(submitBtn, false);
+    }
+  });
+}
+
+// Renvoi du code OTP (si expiré ou non reçu)
+if (otpResendBtn) {
+  otpResendBtn.addEventListener('click', async () => {
+    const email = otpForm?.dataset.email;
+    if (!email) {
+      showAlert('Session expirée, veuillez recommencer votre inscription.', true);
+      return;
+    }
+
+    otpResendBtn.disabled = true;
+    const originalText = otpResendBtn.textContent;
+    otpResendBtn.textContent = 'Envoi en cours...';
+
+    try {
+      const { error } = await supabase.auth.resend({ type: 'signup', email });
+      if (error) throw error;
+      showAlert(`Un nouveau code vient d'être envoyé à ${email}.`);
+    } catch (err) {
+      showAlert(translateAuthError(err), true);
+    } finally {
+      otpResendBtn.disabled = false;
+      otpResendBtn.textContent = originalText;
     }
   });
 }

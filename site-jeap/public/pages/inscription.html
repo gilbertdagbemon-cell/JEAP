@@ -92,7 +92,27 @@
         <button type="submit" id="btn-submit" class="btn-cta w-full mt-2 py-2.5">S'inscrire</button>
       </form>
 
-      <p class="text-xs text-center text-gray-500 mt-6">
+      <!-- ===================== ÉTAPE 2 : CODE DE CONFIRMATION (OTP) ===================== -->
+      <!-- Masqué par defaut, affiche par auth.js une fois l'inscription reussie.
+           Remplace le lien de confirmation par e-mail (probleme de pre-scan des liens
+           par le fournisseur SMTP) par un code a 6 chiffres saisi manuellement. -->
+      <form id="otp-form" class="space-y-4 hidden">
+        <p class="text-xs text-gray-600 text-center">
+          Un code à 6 chiffres a été envoyé à <span id="otp-email-display" class="font-semibold"></span>.
+          Saisissez-le ci-dessous pour activer votre compte (vérifiez vos spams si besoin).
+        </p>
+
+        <div>
+          <label for="otp-code" class="block text-xs font-semibold uppercase text-gray-600 mb-1">Code de confirmation</label>
+          <input type="text" id="otp-code" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code"
+            class="w-full border border-gray-200 rounded px-3 py-2 text-sm text-center tracking-[0.5em] font-semibold focus:outline-none focus:ring-2 focus:ring-jeap-accent" placeholder="123456">
+        </div>
+
+        <button type="submit" id="btn-otp-submit" class="btn-cta w-full mt-2 py-2.5">Confirmer mon compte</button>
+        <button type="button" id="btn-otp-resend" class="w-full text-xs text-jeap-accent-dark hover:underline text-center">Renvoyer le code</button>
+      </form>
+
+      <p id="signup-footer-link" class="text-xs text-center text-gray-500 mt-6">
         Déjà un compte ? <a href="connexion.html" class="text-jeap-accent-dark hover:underline font-semibold">Se connecter</a>
       </p>
     </div>
