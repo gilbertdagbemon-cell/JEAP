@@ -119,7 +119,7 @@ if (signupForm) {
       // par le trigger handle_new_user() (SECURITY DEFINER) cote base de donnees.
       // Il ne faut PAS l'inserer une seconde fois ici, sinon erreur "duplicate key".
 
-      showAlert(`Compte créé ! Un code à 6 chiffres a été envoyé à ${email}. Saisissez-le ci-dessous (vérifiez vos spams si besoin).`);
+      showAlert(`Compte créé ! Un code de confirmation a été envoyé à ${email}. Saisissez-le ci-dessous (vérifiez vos spams si besoin).`);
 
       // On bascule vers l'étape 2 : saisie du code OTP reçu par e-mail,
       // au lieu de faire cliquer sur un lien (qui posait probleme avec le
