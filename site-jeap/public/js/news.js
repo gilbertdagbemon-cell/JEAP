@@ -1,4 +1,3 @@
-```js
 import { supabase } from './supabaseClient.js';
 import { escapeHTML, safeUrl } from './utils.js';
 
@@ -253,4 +252,3 @@ async function fetchNews() {
 }
 
 fetchNews();
-```
