@@ -205,13 +205,31 @@ async function fetchNews() {
   if (!homeGrid && !fullList) return;
 
   try {
+    /*
+     * Sélection explicite des colonnes utilisées.
+     * Cela évite de récupérer d'éventuelles colonnes
+     * inutiles de la table news.
+     */
     let query = supabase
       .from('news')
-      .select('*')
+      .select(`
+        id,
+        title,
+        content,
+        image_url,
+        published_at
+      `)
       .order('published_at', {
+        ascending: false
+      })
+      .order('id', {
         ascending: false
       });
 
+    /*
+     * Sur la page d'accueil, seules les 4 dernières
+     * actualités sont nécessaires.
+     */
     if (homeGrid && !fullList) {
       query = query.limit(4);
     }
